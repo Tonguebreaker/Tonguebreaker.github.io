@@ -20,7 +20,7 @@
         }
         
         .character-sheet {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000000 100%);
             border: 3px solid #ffffff;
@@ -221,17 +221,11 @@
             opacity: 0.8;
         }
         
-                .main-grid {
+        .main-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-bottom: 30px;
-        }
-        
-        .attributes-stats-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
         }
         
         .section {
@@ -395,7 +389,7 @@
         .stats-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
         
         .stat-box {
@@ -409,7 +403,7 @@
         
         .stat-label {
             font-family: 'Cinzel', serif;
-            font-size: 1em;
+            font-size: 0.9em;
             color: #ffffff;
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -419,23 +413,24 @@
         
         .stat-value {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: bold;
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .stat-input {
-            width: 60px;
-            height: 45px;
+            width: 50px;
+            height: 35px;
             background: transparent;
             border: none;
             color: #ffffff;
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-family: 'Cinzel Decorative', serif;
             font-weight: bold;
             border-bottom: 2px solid #ffffff;
@@ -957,17 +952,39 @@
         }
 
         /* Responsive adjustments */
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
+            .character-sheet {
+                max-width: 100%;
+                padding: 20px;
+            }
+            
             .main-grid {
                 grid-template-columns: 1fr;
             }
             
+            .stats-stats {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+            }
+            
+            .stat-input {
+                width: 40px;
+                height: 30px;
+                font-size: 1em;
+            }
+            
+            .stat-label {
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 768px) {
             .attributes-grid {
                 grid-template-columns: 1fr;
             }
             
             .stats-stats {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
             
             .perks-traits-grid {
@@ -1042,7 +1059,6 @@
         </div>
         
         <div class="main-grid">
-            <div class="attributes-stats-row">
             <div class="section">
                 <div class="section-title">Core Attributes</div>
                 <div class="attributes-grid">
@@ -1797,5 +1813,3 @@
             });
         });
     </script>
-</body>
-</html>
