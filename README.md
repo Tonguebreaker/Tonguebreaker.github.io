@@ -222,11 +222,17 @@
             opacity: 0.8;
         }
         
-        .main-grid {
+                .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .attributes-stats-row {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 30px;
-            margin-bottom: 30px;
         }
         
         .section {
@@ -1037,6 +1043,7 @@
         </div>
         
         <div class="main-grid">
+            <div class="attributes-stats-row">
             <div class="section">
                 <div class="section-title">Core Attributes</div>
                 <div class="attributes-grid">
