@@ -94,6 +94,14 @@
             background: linear-gradient(135deg, #4a8f5a 0%, #6abf7a 100%);
         }
 
+        .btn.share {
+            background: linear-gradient(135deg, #2a3459 0%, #4a5f8f 100%);
+        }
+
+        .btn.share:hover {
+            background: linear-gradient(135deg, #4a5f8f 0%, #6a7fbf 100%);
+        }
+
         .load-section {
             background: #111;
             border: 1px solid #666;
@@ -103,7 +111,7 @@
             text-align: left;
         }
 
-        .load-section input {
+        .load-section input, .load-section textarea {
             width: 100%;
             background: #000;
             border: 1px solid #666;
@@ -112,11 +120,36 @@
             border-radius: 5px;
             font-family: monospace;
             margin: 5px 0;
+            font-size: 0.9em;
         }
 
-        .load-section input:focus {
+        .load-section input:focus, .load-section textarea:focus {
             outline: none;
             border-color: #fff;
+        }
+
+        .url-share-input {
+            font-size: 0.8em !important;
+            word-break: break-all;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #2a3459 0%, #4a5f8f 100%);
+            border: 1px solid #666;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.8em;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #4a5f8f 0%, #6a7fbf 100%);
         }
         
         .name-section {
@@ -784,12 +817,81 @@
     </style>
 </head>
 <body>
+    <!-- Simple LZ-string compression library -->
+    <script>
+        // Simplified LZ-string compression for character data
+        const LZString = {
+            compress: function(input) {
+                if (input === null || input === undefined) return "";
+                
+                const dictionary = {};
+                const data = input.split("");
+                let phrase = data[0];
+                let code = 256;
+                let out = [];
+                let i;
+                
+                for (i = 1; i < data.length; i++) {
+                    const curChar = data[i];
+                    if (dictionary[phrase + curChar] !== undefined) {
+                        phrase += curChar;
+                    } else {
+                        out.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0));
+                        dictionary[phrase + curChar] = code;
+                        code++;
+                        phrase = curChar;
+                    }
+                }
+                out.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0));
+                
+                // Convert to base64-like string
+                return out.map(num => String.fromCharCode(num + 33)).join('');
+            },
+            
+            decompress: function(compressed) {
+                if (!compressed) return "";
+                
+                try {
+                    const data = compressed.split("").map(char => char.charCodeAt(0) - 33);
+                    const dictionary = {};
+                    let phrase = String.fromCharCode(data[0]);
+                    let out = phrase;
+                    let code = 256;
+                    let i;
+                    
+                    for (i = 1; i < data.length; i++) {
+                        const curCode = data[i];
+                        let entry;
+                        
+                        if (dictionary[curCode] !== undefined) {
+                            entry = dictionary[curCode];
+                        } else if (curCode === code) {
+                            entry = phrase + phrase.charAt(0);
+                        } else {
+                            entry = String.fromCharCode(curCode);
+                        }
+                        
+                        out += entry;
+                        dictionary[code] = phrase + entry.charAt(0);
+                        code++;
+                        phrase = entry;
+                    }
+                    
+                    return out;
+                } catch (e) {
+                    return "";
+                }
+            }
+        };
+    </script>
+
     <div class="character-sheet">
         <div class="header">
             <div class="title">CHARACTER CODEX</div>
             <div class="share-buttons">
                 <button class="btn" onclick="exportCharacter()">Export Data</button>
                 <button class="btn" onclick="showImportSection()">Import Data</button>
+                <button class="btn share" onclick="generateShareLink()">Share Link</button>
             </div>
             
             <div id="importSection" class="load-section hidden">
@@ -800,6 +902,25 @@
                 </div>
                 <div class="storage-info">
                     Use Export/Import to save and load your characters or transfer between devices.
+                </div>
+            </div>
+
+            <div id="shareLinkSection" class="load-section hidden">
+                <h4 style="color: #fff; margin-top: 0;">Share Character Link</h4>
+                <div style="margin: 15px 0;">
+                    <label style="color: #ccc; display: block; margin-bottom: 5px;">Shareable URL (paste in Discord, forums, etc.):</label>
+                    <div style="display: flex; align-items: flex-start;">
+                        <textarea id="shareUrlOutput" class="url-share-input" readonly placeholder="Click 'Generate Link' to create a shareable URL..."></textarea>
+                        <button class="copy-btn" onclick="copyShareLink()" id="copyBtn">Copy</button>
+                    </div>
+                </div>
+                <div style="margin: 15px 0;">
+                    <label style="color: #ccc; display: block; margin-bottom: 5px;">Or paste a shared link here to load:</label>
+                    <textarea id="shareUrlInput" placeholder="Paste a character share link here..." style="width: 100%; background: #000; border: 1px solid #666; color: #fff; padding: 8px; border-radius: 5px; font-family: monospace; margin: 5px 0; font-size: 0.9em; min-height: 60px; resize: vertical;"></textarea>
+                    <button class="btn" onclick="loadFromShareLink()">Load from Link</button>
+                </div>
+                <div class="storage-info">
+                    Share links contain compressed character data. They work great for Discord, Reddit, forums, etc. No file uploads needed!
                 </div>
             </div>
         </div>
@@ -1106,7 +1227,7 @@
             </div>
         </div>
         
-        <div class="ornamental">⧨ ⟐ ⧨</div>
+        <div class="ornamental">⧨ ⟡ ⧨</div>
     </div>
 
     <div id="notification" class="notification">Character saved!</div>
@@ -1197,6 +1318,140 @@
             return compressed;
         }
 
+        // URL Sharing Functions
+        function generateShareLink() {
+            const rawData = getAllFormData();
+            const compressedData = compressTextData(rawData);
+            
+            // For URL sharing, we need to be more aggressive with compression
+            // Remove art images for URL sharing (they make URLs too long)
+            const urlData = { ...compressedData };
+            delete urlData.artImages; // Images would make URL too long
+            
+            try {
+                const jsonString = JSON.stringify(urlData);
+                const compressed = LZString.compress(jsonString);
+                const encoded = btoa(compressed).replace(/[+/=]/g, function(match) {
+                    return {'=':'','+':'-','/':'_'}[match];
+                });
+                
+                const shareUrl = window.location.origin + window.location.pathname + '?c=' + encoded;
+                
+                document.getElementById('shareUrlOutput').value = shareUrl;
+                document.getElementById('shareLinkSection').classList.remove('hidden');
+                
+                // Show compression stats
+                const originalSize = jsonString.length;
+                const compressedSize = encoded.length;
+                const savings = Math.round((1 - compressedSize / originalSize) * 100);
+                
+                showNotification(`Share link generated! ${savings}% smaller than raw JSON.`);
+                
+            } catch (error) {
+                console.error('Failed to generate share link:', error);
+                showNotification('Error generating share link', 'error');
+            }
+        }
+
+        function copyShareLink() {
+            const shareUrl = document.getElementById('shareUrlOutput');
+            shareUrl.select();
+            shareUrl.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                const copyBtn = document.getElementById('copyBtn');
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Copied!';
+                copyBtn.style.background = 'linear-gradient(135deg, #2a5934 0%, #4a8f5a 100%)';
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.style.background = '';
+                }, 2000);
+                
+                showNotification('Share link copied to clipboard!');
+            } catch (err) {
+                // Fallback for browsers that don't support execCommand
+                navigator.clipboard?.writeText(shareUrl.value).then(() => {
+                    showNotification('Share link copied to clipboard!');
+                }).catch(() => {
+                    showNotification('Please copy the link manually', 'error');
+                });
+            }
+        }
+
+        function loadFromShareLink() {
+            const shareInput = document.getElementById('shareUrlInput').value.trim();
+            if (!shareInput) {
+                showNotification('Please paste a share link first', 'error');
+                return;
+            }
+            
+            try {
+                // Extract the compressed data from the URL
+                let encoded;
+                if (shareInput.includes('?c=')) {
+                    encoded = shareInput.split('?c=')[1].split('&')[0];
+                } else if (shareInput.includes('&c=')) {
+                    encoded = shareInput.split('&c=')[1].split('&')[0];
+                } else {
+                    // Maybe it's just the encoded part
+                    encoded = shareInput;
+                }
+                
+                // Decode the data
+                const urlSafe = encoded.replace(/-/g, '+').replace(/_/g, '/');
+                // Add padding if needed
+                const padded = urlSafe + '='.repeat((4 - urlSafe.length % 4) % 4);
+                const compressed = atob(padded);
+                const jsonString = LZString.decompress(compressed);
+                
+                if (!jsonString) {
+                    throw new Error('Failed to decompress data');
+                }
+                
+                const data = JSON.parse(jsonString);
+                loadFormData(data);
+                
+                showNotification('Character loaded from share link!');
+                document.getElementById('shareUrlInput').value = '';
+                document.getElementById('shareLinkSection').classList.add('hidden');
+                
+            } catch (error) {
+                console.error('Failed to load from share link:', error);
+                showNotification('Invalid share link format', 'error');
+            }
+        }
+
+        // Check for shared character on page load
+        function checkForSharedCharacter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedData = urlParams.get('c');
+            
+            if (sharedData) {
+                try {
+                    const urlSafe = sharedData.replace(/-/g, '+').replace(/_/g, '/');
+                    const padded = urlSafe + '='.repeat((4 - urlSafe.length % 4) % 4);
+                    const compressed = atob(padded);
+                    const jsonString = LZString.decompress(compressed);
+                    
+                    if (jsonString) {
+                        const data = JSON.parse(jsonString);
+                        loadFormData(data);
+                        showNotification('Shared character loaded!');
+                        
+                        // Clean up URL without reloading page
+                        const cleanUrl = window.location.origin + window.location.pathname;
+                        window.history.replaceState({}, document.title, cleanUrl);
+                    }
+                } catch (error) {
+                    console.error('Failed to load shared character:', error);
+                    showNotification('Invalid shared character data', 'error');
+                }
+            }
+        }
+
         function exportCharacter() {
             const rawData = getAllFormData();
             const compressedData = compressTextData(rawData);
@@ -1285,6 +1540,8 @@
         function showImportSection() {
             const section = document.getElementById('importSection');
             section.classList.toggle('hidden');
+            // Hide share section when showing import
+            document.getElementById('shareLinkSection').classList.add('hidden');
         }
 
         function toggleFacet(element) {
@@ -1550,6 +1807,7 @@
         // Initialize on page load
         window.addEventListener('load', () => {
             initializeArtLibrary();
+            checkForSharedCharacter();
         });
 
         // Keyboard shortcuts
@@ -1558,6 +1816,9 @@
                 if (e.key === 'e') {
                     e.preventDefault();
                     exportCharacter();
+                } else if (e.key === 's') {
+                    e.preventDefault();
+                    generateShareLink();
                 }
             }
         });
