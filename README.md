@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +20,7 @@
         }
         
         .character-sheet {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000000 100%);
             border: 3px solid #ffffff;
