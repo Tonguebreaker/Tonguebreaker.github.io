@@ -1,192 +1,224 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Sheet</title>
+    <title>Character Codex</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap');
         
         body {
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            font-family: 'Cinzel Decorative', serif;
+            background: #000000;
+            font-family: 'Cinzel', serif;
             color: #ffffff;
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 100, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
         }
         
         .character-sheet {
             max-width: 1200px;
             margin: 0 auto;
-            background: #000;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000000 100%);
             border: 3px solid #ffffff;
-            border-radius: 15px;
+            border-radius: 0;
             position: relative;
-            padding: 30px;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            box-shadow: 
+                0 0 50px rgba(255, 255, 255, 0.2),
+                inset 0 0 50px rgba(0, 0, 0, 0.8);
         }
         
         .character-sheet::before {
             content: '';
             position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            background: linear-gradient(45deg, #ffffff, #cccccc, #ffffff, #cccccc);
-            border-radius: 20px;
-            z-index: -1;
-            animation: borderGlow 3s ease-in-out infinite alternate;
-        }
-        
-        @keyframes borderGlow {
-            0% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
-            100% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.8); }
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.03) 50%, 
+                transparent 70%);
+            pointer-events: none;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #ffffff;
-            padding-bottom: 20px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #ffffff;
+            padding-bottom: 30px;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #ff0000;
         }
         
         .title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: 700;
             color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
-            margin-bottom: 10px;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.3),
+                0 0 30px rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
         }
 
         .share-buttons {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #333 0%, #555 100%);
+            background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
             border: 2px solid #ffffff;
             color: #ffffff;
-            padding: 10px 20px;
-            margin: 0 5px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            margin: 0 8px;
+            border-radius: 0;
             cursor: pointer;
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-size: 0.9em;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #555 0%, #777 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%);
+            color: #000000;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
         }
 
         .btn.success {
-            background: linear-gradient(135deg, #2a5934 0%, #4a8f5a 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #444444 50%, #1a1a1a 100%);
+            border-color: #00ff00;
         }
 
         .btn.success:hover {
-            background: linear-gradient(135deg, #4a8f5a 0%, #6abf7a 100%);
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 50%, #00ff00 100%);
+            color: #000000;
         }
 
         .load-section {
-            background: #111;
-            border: 1px solid #666;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 2px solid #666666;
+            border-radius: 0;
+            padding: 20px;
+            margin: 15px 0;
             text-align: left;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
         .load-section input {
             width: 100%;
-            background: #000;
-            border: 1px solid #666;
-            color: #fff;
-            padding: 8px;
-            border-radius: 5px;
-            font-family: monospace;
-            margin: 5px 0;
+            background: #000000;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 0;
+            font-family: 'Cinzel', serif;
+            margin: 8px 0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
         }
 
         .load-section input:focus {
             outline: none;
-            border-color: #fff;
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
         }
         
         .name-section {
             text-align: center;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #111 0%, #222 100%);
-            border: 2px solid #ffffff;
-            border-radius: 15px;
-            padding: 25px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            border: 3px solid #ffffff;
+            border-radius: 0;
+            padding: 35px;
             position: relative;
+            box-shadow: 
+                0 0 30px rgba(255, 255, 255, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.8);
         }
         
         .name-section::before {
             content: '';
             position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 15px;
-            z-index: -1;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: none;
         }
         
         .name-input {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.2em;
-            font-weight: 600;
+            font-size: 2.5em;
+            font-weight: 700;
             background: transparent;
             border: none;
-            border-bottom: 3px solid #ffffff;
+            border-bottom: 4px solid #ffffff;
             color: #ffffff;
             text-align: center;
             width: 100%;
-            max-width: 500px;
-            padding: 10px;
-            margin-bottom: 15px;
+            max-width: 600px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
         
         .name-input:focus {
             outline: none;
-            border-bottom-color: #cccccc;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            border-bottom-color: #ff0000;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 5px 25px rgba(255, 0, 0, 0.3);
         }
         
         .name-input::placeholder {
-            color: #666;
+            color: #666666;
             opacity: 0.7;
         }
         
         .titles-input {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 1.3em;
+            font-family: 'Cinzel', serif;
+            font-size: 1.4em;
             background: transparent;
             border: none;
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 2px solid #cccccc;
             color: #cccccc;
             text-align: center;
             width: 100%;
-            max-width: 600px;
-            padding: 8px;
+            max-width: 700px;
+            padding: 10px;
+            font-style: italic;
         }
         
         .titles-input:focus {
             outline: none;
             border-bottom-color: #ffffff;
+            color: #ffffff;
         }
         
         .titles-input::placeholder {
-            color: #555;
+            color: #555555;
             opacity: 0.8;
         }
         
@@ -198,42 +230,46 @@
         }
         
         .section {
-            background: linear-gradient(135deg, #111 0%, #222 100%);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
             border: 2px solid #ffffff;
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 0;
+            padding: 25px;
             position: relative;
+            box-shadow: 
+                0 0 25px rgba(255, 255, 255, 0.1),
+                inset 0 0 25px rgba(0, 0, 0, 0.8);
         }
         
         .section::before {
             content: '';
             position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            border-radius: 10px;
-            z-index: -1;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: none;
         }
         
         .section-title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.4em;
+            font-size: 1.5em;
+            font-weight: 700;
             color: #ffffff;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 1px solid #ffffff;
-            padding-bottom: 8px;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
         .basic-info {
             grid-column: 1 / -1;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
         
         .info-field {
@@ -242,53 +278,60 @@
         }
         
         .info-field label {
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-weight: 600;
             color: #ffffff;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             font-size: 0.9em;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
         .info-field input, .info-field textarea {
-            background: #000;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-            padding: 8px;
-            color: #fff;
-            font-family: 'Cinzel Decorative', serif;
+            background: #000000;
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            padding: 12px;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
         }
         
         .info-field input:focus, .info-field textarea:focus {
             outline: none;
-            border-color: #cccccc;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            border-color: #ff0000;
+            box-shadow: 
+                inset 0 0 10px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(255, 0, 0, 0.5);
         }
         
         .attributes-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
         }
         
         .attribute {
             display: flex;
             align-items: center;
-            background: #000;
-            border: 1px solid #ffffff;
-            border-radius: 8px;
-            padding: 10px;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            padding: 15px;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
         }
         
         .attribute-letter {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2em;
+            font-size: 2.2em;
             font-weight: 700;
             color: #ffffff;
-            width: 40px;
+            width: 50px;
             text-align: center;
-            margin-right: 15px;
+            margin-right: 20px;
+            text-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.3);
         }
         
         .attribute-details {
@@ -296,36 +339,47 @@
         }
         
         .attribute-name {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
             color: #ffffff;
             font-size: 1.1em;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .attribute-desc {
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-size: 0.8em;
             color: #cccccc;
-            line-height: 1.3;
+            line-height: 1.4;
+            font-style: italic;
         }
         
         .attribute-score {
             text-align: center;
-            margin-left: 15px;
+            margin-left: 20px;
         }
         
         .attribute-score input {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.6em;
             font-weight: bold;
-            background: #000;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            color: #fff;
+            background: #000000;
+            border: 3px solid #ffffff;
+            border-radius: 0;
+            color: #ffffff;
             font-family: 'Cinzel Decorative', serif;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+        
+        .attribute-score input:focus {
+            border-color: #ff0000;
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(255, 0, 0, 0.5);
         }
         
         .stats-section {
@@ -336,52 +390,57 @@
         .stats-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
         }
         
         .stat-box {
-            background: #000;
-            border: 1px solid #ffffff;
-            border-radius: 5px;
-            padding: 10px;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            padding: 15px;
             text-align: center;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
         }
         
         .stat-label {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 0.9em;
+            font-family: 'Cinzel', serif;
+            font-size: 1em;
             color: #ffffff;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 2px;
         }
         
         .stat-value {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: bold;
-            color: #fff;
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
         }
 
         .stat-input {
-            width: 50px;
-            height: 40px;
+            width: 60px;
+            height: 45px;
             background: transparent;
             border: none;
-            color: #fff;
+            color: #ffffff;
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-family: 'Cinzel Decorative', serif;
             font-weight: bold;
+            border-bottom: 2px solid #ffffff;
         }
 
         .stat-input:focus {
             outline: none;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom-color: #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
         }
         
         .thaumaturgy-section {
@@ -391,42 +450,49 @@
         .facets-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
+            gap: 20px;
+            margin-top: 20px;
         }
         
         .facet {
-            background: #000;
-            border: 1px solid #ffffff;
-            border-radius: 8px;
-            padding: 15px;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
         }
         
         .facet:hover {
-            background: #111;
-            border-color: #cccccc;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-color: #ff0000;
+            transform: translateY(-3px);
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 5px 20px rgba(255, 0, 0, 0.3);
         }
         
         .facet.active {
-            background: #ffffff;
-            color: #000;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+            color: #000000;
+            border-color: #000000;
         }
         
         .facet-name {
-            font-family: 'Cinzel Decorative', serif;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            margin-bottom: 8px;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .facet-desc {
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-size: 0.8em;
             opacity: 0.8;
+            font-style: italic;
         }
         
         .perks-traits-section {
@@ -436,34 +502,38 @@
         .perks-traits-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 15px;
+            gap: 40px;
+            margin-top: 20px;
         }
         
         .perks-column, .traits-column {
-            background: #000;
-            border: 1px solid #ffffff;
-            border-radius: 8px;
-            padding: 15px;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
         }
         
         .perks-column h4, .traits-column h4 {
             font-family: 'Cinzel Decorative', serif;
             color: #ffffff;
-            border-bottom: 1px solid #ffffff;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
         .perk-item, .trait-item {
-            background: #111;
-            border: 1px solid #666;
-            border-radius: 5px;
-            padding: 8px;
-            margin-bottom: 8px;
-            font-family: 'Cinzel Decorative', serif;
+            background: #000000;
+            border: 1px solid #666666;
+            border-radius: 0;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Cinzel', serif;
             font-size: 0.9em;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
         }
         
         .perk-item input, .trait-item input {
@@ -471,72 +541,77 @@
             background: transparent;
             border: none;
             color: #ffffff;
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
         }
         
         .perk-item input:focus, .trait-item input:focus {
             outline: none;
+            color: #ff0000;
         }
 
         .blessings-section {
             grid-column: 1 / -1;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .blessings-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 15px;
-            max-width: 800px;
+            gap: 20px;
+            margin-top: 20px;
+            max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
 
         .blessing-item {
-            background: #000;
-            border: 1px solid #ffffff;
-            border-radius: 8px;
-            padding: 15px;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
         .blessing-name {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .blessing-name input {
             width: 100%;
             background: transparent;
             border: none;
-            border-bottom: 1px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
             color: #ffffff;
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-weight: 600;
-            font-size: 1.1em;
-            padding: 5px 0;
+            font-size: 1.2em;
+            padding: 8px 0;
         }
 
         .blessing-name input:focus {
             outline: none;
-            border-bottom-color: #cccccc;
+            border-bottom-color: #ff0000;
+            color: #ff0000;
         }
 
         .blessing-description textarea {
             width: 100%;
-            height: 60px;
-            background: transparent;
-            border: 1px solid #666;
-            border-radius: 5px;
+            height: 70px;
+            background: #000000;
+            border: 1px solid #666666;
+            border-radius: 0;
             color: #cccccc;
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-size: 0.9em;
-            padding: 8px;
+            padding: 10px;
             resize: vertical;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
         }
 
         .blessing-description textarea:focus {
             outline: none;
             border-color: #ffffff;
+            color: #ffffff;
         }
         
         .equipment-section {
@@ -546,68 +621,108 @@
         .equipment-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            margin-top: 15px;
+            gap: 25px;
+            margin-top: 20px;
         }
         
         .equipment-category h4 {
             font-family: 'Cinzel Decorative', serif;
             color: #ffffff;
-            border-bottom: 1px solid #ffffff;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
         .equipment-list {
-            max-height: 150px;
+            max-height: 160px;
             overflow-y: auto;
         }
         
         .equipment-list::-webkit-scrollbar {
-            width: 5px;
+            width: 8px;
         }
         
         .equipment-list::-webkit-scrollbar-track {
-            background: #000;
+            background: #000000;
+            border: 1px solid #666666;
         }
         
         .equipment-list::-webkit-scrollbar-thumb {
             background: #ffffff;
-            border-radius: 3px;
+            border-radius: 0;
+        }
+
+        .equipment-list textarea {
+            background: #000000;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            border-radius: 0;
+            padding: 10px;
+            resize: none;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .equipment-list textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(255, 0, 0, 0.5);
         }
         
         .notes-section {
             grid-column: 1 / -1;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         
         .notes-textarea {
             width: 100%;
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
+            background: #000000;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            border-radius: 0;
+            padding: 15px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .notes-textarea:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(255, 0, 0, 0.5);
         }
         
         .ornamental {
             text-align: center;
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2em;
+            font-size: 2.5em;
             color: #ffffff;
-            margin: 20px 0;
+            margin: 30px 0;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #2a5934 0%, #4a8f5a 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            border: 2px solid #ffffff;
-            font-family: 'Cinzel Decorative', serif;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 20px 25px;
+            border-radius: 0;
+            border: 2px solid #00ff00;
+            font-family: 'Cinzel', serif;
             z-index: 1000;
             transform: translateX(400px);
             transition: transform 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
         }
 
         .notification.show {
@@ -616,81 +731,91 @@
 
         .art-library-section {
             grid-column: 1 / -1;
-            margin-top: 30px;
-            background: linear-gradient(135deg, #111 0%, #222 100%);
+            margin-top: 40px;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
             border: 3px solid #ffffff;
-            border-radius: 15px;
-            padding: 30px;
+            border-radius: 0;
+            padding: 40px;
             position: relative;
+            box-shadow: 
+                0 0 40px rgba(255, 255, 255, 0.2),
+                inset 0 0 40px rgba(0, 0, 0, 0.8);
         }
 
         .art-library-section::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ffffff, #cccccc, #ffffff, #cccccc);
-            border-radius: 18px;
-            z-index: -1;
-            animation: borderGlow 3s ease-in-out infinite alternate;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: none;
         }
 
         .art-library-title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 2.2em;
+            font-size: 2.5em;
             font-weight: 700;
             color: #ffffff;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+            letter-spacing: 4px;
+            text-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3);
         }
 
         .art-drop-zone {
-            border: 3px dashed #666;
-            border-radius: 12px;
-            padding: 60px 40px;
+            border: 3px dashed #666666;
+            border-radius: 0;
+            padding: 80px 50px;
             text-align: center;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
-            min-height: 200px;
+            min-height: 250px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
         .art-drop-zone:hover {
             border-color: #ffffff;
             background: rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                inset 0 0 30px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .art-drop-zone.dragover {
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
+            border-color: #ff0000;
+            background: rgba(255, 0, 0, 0.1);
             transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
         }
 
         .drop-text {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.4em;
+            font-size: 1.6em;
             color: #ffffff;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .drop-subtext {
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             font-size: 1em;
-            color: #aaa;
+            color: #aaaaaa;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-style: italic;
         }
 
         .file-input {
@@ -699,43 +824,48 @@
 
         .art-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
         }
 
         .art-item {
-            background: #000;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
             border: 2px solid #ffffff;
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 0;
+            padding: 20px;
             text-align: center;
             position: relative;
             transition: all 0.3s ease;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
         .art-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+            border-color: #ff0000;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.8),
+                0 10px 30px rgba(255, 0, 0, 0.3);
         }
 
         .art-image {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #666;
+            border-radius: 0;
+            border: 1px solid #666666;
+            filter: contrast(1.2) brightness(0.9);
         }
 
         .art-title {
-            font-family: 'Cinzel Decorative', serif;
+            font-family: 'Cinzel', serif;
             color: #ffffff;
-            margin-top: 10px;
+            margin-top: 15px;
             font-size: 1em;
-            padding: 5px;
+            padding: 8px;
             background: transparent;
             border: none;
-            border-bottom: 1px solid #666;
+            border-bottom: 1px solid #666666;
             text-align: center;
             width: 100%;
         }
@@ -743,28 +873,32 @@
         .art-title:focus {
             outline: none;
             border-bottom-color: #ffffff;
+            color: #ff0000;
         }
 
         .remove-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 0, 0, 0.8);
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 0, 0, 0.9);
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            width: 30px;
+            height: 30px;
             color: white;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
         }
 
         .remove-btn:hover {
-            background: rgba(255, 0, 0, 1);
+            background: rgba(255, 255, 255, 0.9);
+            color: #000000;
             transform: scale(1.1);
         }
 
@@ -773,13 +907,83 @@
         }
 
         .storage-info {
-            background: #111;
-            border: 1px solid #666;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
+            background: #111111;
+            border: 1px solid #666666;
+            border-radius: 0;
+            padding: 15px;
+            margin: 15px 0;
             font-size: 0.8em;
-            color: #aaa;
+            color: #aaaaaa;
+            font-family: 'Cinzel', serif;
+            font-style: italic;
+        }
+
+        /* Additional noir aesthetic enhancements */
+        .quote-section {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #cccccc;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1em;
+            padding: 15px;
+            border-left: 3px solid #ffffff;
+            border-right: 3px solid #ffffff;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Scrollbar styling for consistency */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+            border: 1px solid #333333;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ffffff;
+            border-radius: 0;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cccccc;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .perks-traits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .facets-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .name-input {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
@@ -956,7 +1160,7 @@
         
         <div class="section thaumaturgy-section">
             <div class="section-title">Thaumaturgy</div>
-            <div style="text-align: center; font-style: italic; margin-bottom: 15px; color: #cccccc;">
+            <div class="quote-section">
                 "I reject your reality and substitute my own."
             </div>
             
@@ -992,9 +1196,9 @@
                 </div>
             </div>
             
-            <div style="margin-top: 20px;">
-                <label style="color: #ffffff; font-weight: 600;">Known Directives:</label>
-                <textarea id="directives" style="width: 100%; height: 80px; background: #000; border: 1px solid #ffffff; color: #fff; font-family: 'Cinzel Decorative', serif; border-radius: 5px; padding: 10px; resize: vertical;" placeholder="List your known directives..."></textarea>
+            <div style="margin-top: 25px;">
+                <label style="color: #ffffff; font-weight: 600; font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 1px;">Known Directives:</label>
+                <textarea id="directives" style="width: 100%; height: 90px; background: #000000; border: 2px solid #ffffff; color: #ffffff; font-family: 'Cinzel', serif; border-radius: 0; padding: 15px; resize: vertical; margin-top: 10px; box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);" placeholder="List your known directives..."></textarea>
             </div>
         </div>
 
@@ -1058,21 +1262,21 @@
                 <div class="equipment-category">
                     <h4>Weapons</h4>
                     <div class="equipment-list">
-                        <textarea id="weapons" style="width: 100%; height: 120px; background: #000; border: 1px solid #ffffff; color: #fff; font-family: 'Cinzel Decorative', serif; border-radius: 5px; padding: 8px; resize: none;" placeholder="List weapons..."></textarea>
+                        <textarea id="weapons" style="width: 100%; height: 130px;" placeholder="List weapons..."></textarea>
                     </div>
                 </div>
                 
                 <div class="equipment-category">
                     <h4>Armor & Protection</h4>
                     <div class="equipment-list">
-                        <textarea id="armor" style="width: 100%; height: 120px; background: #000; border: 1px solid #ffffff; color: #fff; font-family: 'Cinzel Decorative', serif; border-radius: 5px; padding: 8px; resize: none;" placeholder="List armor..."></textarea>
+                        <textarea id="armor" style="width: 100%; height: 130px;" placeholder="List armor..."></textarea>
                     </div>
                 </div>
                 
                 <div class="equipment-category">
                     <h4>Tools & Gear</h4>
                     <div class="equipment-list">
-                        <textarea id="tools" style="width: 100%; height: 120px; background: #000; border: 1px solid #ffffff; color: #fff; font-family: 'Cinzel Decorative', serif; border-radius: 5px; padding: 8px; resize: none;" placeholder="List gear..."></textarea>
+                        <textarea id="tools" style="width: 100%; height: 130px;" placeholder="List gear..."></textarea>
                     </div>
                 </div>
             </div>
@@ -1080,15 +1284,15 @@
         
         <div class="section notes-section">
             <div class="section-title">Background & Notes</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
                 <div>
-                    <label style="color: #ffffff; font-weight: 600; display: block; margin-bottom: 5px;">Personal History:</label>
-                    <textarea id="history" class="notes-textarea" style="background: #000; border: 1px solid #ffffff; color: #fff; font-family: 'Cinzel Decorative', serif; border-radius: 5px; padding: 10px;" placeholder="Character background..."></textarea>
+                    <label style="color: #ffffff; font-weight: 600; display: block; margin-bottom: 8px; font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 1px;">Personal History:</label>
+                    <textarea id="history" class="notes-textarea" placeholder="Character background..."></textarea>
                 </div>
                 
                 <div>
-                    <label style="color: #ffffff; font-weight: 600; display: block; margin-bottom: 5px;">Goals & Motivations:</label>
-                    <textarea id="goals" class="notes-textarea" style="background: #000; border: 1px solid #ffffff; color: #fff; font-family: 'Cinzel Decorative', serif; border-radius: 5px; padding: 10px;" placeholder="What drives this character..."></textarea>
+                    <label style="color: #ffffff; font-weight: 600; display: block; margin-bottom: 8px; font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 1px;">Goals & Motivations:</label>
+                    <textarea id="goals" class="notes-textarea" placeholder="What drives this character..."></textarea>
                 </div>
             </div>
         </div>
@@ -1537,9 +1741,13 @@
             notification.classList.add('show');
             
             if (type === 'error') {
-                notification.style.background = 'linear-gradient(135deg, #8b1e1e 0%, #b91e1e 100%)';
+                notification.style.background = 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)';
+                notification.style.borderColor = '#ff0000';
+                notification.style.boxShadow = '0 0 30px rgba(255, 0, 0, 0.5)';
             } else {
-                notification.style.background = 'linear-gradient(135deg, #2a5934 0%, #4a8f5a 100%)';
+                notification.style.background = 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)';
+                notification.style.borderColor = '#00ff00';
+                notification.style.boxShadow = '0 0 30px rgba(0, 255, 0, 0.5)';
             }
             
             setTimeout(() => {
@@ -1560,6 +1768,27 @@
                     exportCharacter();
                 }
             }
+        });
+
+        // Add some atmospheric effects
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add subtle glow effects to inputs on focus
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.style.transition = 'all 0.3s ease';
+                });
+            });
+
+            // Add typing effects for character name
+            const nameInput = document.getElementById('characterName');
+            nameInput.addEventListener('input', () => {
+                if (nameInput.value.length > 0) {
+                    nameInput.style.textShadow = '0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(255, 255, 255, 0.4)';
+                } else {
+                    nameInput.style.textShadow = '0 0 15px rgba(255, 255, 255, 0.5)';
+                }
+            });
         });
     </script>
 </body>
