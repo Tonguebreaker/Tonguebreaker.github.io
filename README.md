@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="style.css?v=2">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1790,3 +1789,6 @@
                 }
             });
         });
+    </script>
+</body>
+</html>
