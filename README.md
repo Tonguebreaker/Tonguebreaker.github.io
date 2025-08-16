@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="style.css?v=2">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,7 +21,7 @@
         }
         
         .character-sheet {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #000000 100%);
             border: 3px solid #ffffff;
@@ -223,7 +224,7 @@
         
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 30px;
             margin-bottom: 30px;
         }
@@ -389,7 +390,7 @@
         .stats-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
         }
         
         .stat-box {
@@ -403,7 +404,7 @@
         
         .stat-label {
             font-family: 'Cinzel', serif;
-            font-size: 0.9em;
+            font-size: 1em;
             color: #ffffff;
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -413,24 +414,23 @@
         
         .stat-value {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.1em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .stat-input {
-            width: 50px;
-            height: 35px;
+            width: 60px;
+            height: 45px;
             background: transparent;
             border: none;
             color: #ffffff;
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1.3em;
             font-family: 'Cinzel Decorative', serif;
             font-weight: bold;
             border-bottom: 2px solid #ffffff;
@@ -952,39 +952,17 @@
         }
 
         /* Responsive adjustments */
-        @media (max-width: 1200px) {
-            .character-sheet {
-                max-width: 100%;
-                padding: 20px;
-            }
-            
+        @media (max-width: 768px) {
             .main-grid {
                 grid-template-columns: 1fr;
             }
             
-            .stats-stats {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
-            }
-            
-            .stat-input {
-                width: 40px;
-                height: 30px;
-                font-size: 1em;
-            }
-            
-            .stat-label {
-                font-size: 0.8em;
-            }
-        }
-
-        @media (max-width: 768px) {
             .attributes-grid {
                 grid-template-columns: 1fr;
             }
             
             .stats-stats {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
             }
             
             .perks-traits-grid {
@@ -1108,7 +1086,7 @@
                 </div>
             </div>
             
-            <div class="section stats-section">
+            <div class="section stats-section"
                 <div class="section-title">Stats</div>
                 <div class="stats-stats">
                     <div class="stat-box">
@@ -1812,4 +1790,3 @@
                 }
             });
         });
-    </script>
