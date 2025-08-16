@@ -223,11 +223,12 @@
         }
         
         .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
+    display: -ms-grid; /* IE fallback */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
         
         .section {
             background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
