@@ -30,6 +30,7 @@
             box-shadow: 
                 0 0 50px rgba(255, 255, 255, 0.2),
                 inset 0 0 50px rgba(0, 0, 0, 0.8);
+            min-width: 320px;
         }
         
         .character-sheet::before {
@@ -396,44 +397,46 @@
             background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
             border: 2px solid #ffffff;
             border-radius: 0;
-            padding: 15px;
+            padding: 15px 10px;
             text-align: center;
             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+            min-width: 0;
         }
         
         .stat-label {
             font-family: 'Cinzel', serif;
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #ffffff;
             margin-bottom: 8px;
             text-transform: uppercase;
             font-weight: 600;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
         
         .stat-value {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: bold;
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 4px;
+            flex-wrap: nowrap;
         }
 
         .stat-input {
-            width: 50px;
+            width: 45px;
             height: 35px;
             background: transparent;
             border: none;
             color: #ffffff;
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1em;
             font-family: 'Cinzel Decorative', serif;
             font-weight: bold;
             border-bottom: 2px solid #ffffff;
+            min-width: 45px;
         }
 
         .stat-input:focus {
@@ -951,7 +954,14 @@
             background: #cccccc;
         }
 
-        /* Responsive adjustments */
+        /* Responsive adjustments - FIXED */
+        @media (max-width: 1400px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+        }
+
         @media (max-width: 1200px) {
             .character-sheet {
                 max-width: 100%;
@@ -959,32 +969,30 @@
             }
             
             .main-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            
+            .stats-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-grid {
                 grid-template-columns: 1fr;
             }
             
             .stats-stats {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: 1fr 1fr;
                 gap: 10px;
-            }
-            
-            .stat-input {
-                width: 40px;
-                height: 30px;
-                font-size: 1em;
-            }
-            
-            .stat-label {
-                font-size: 0.8em;
             }
         }
 
         @media (max-width: 768px) {
             .attributes-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .stats-stats {
-                grid-template-columns: 1fr 1fr;
             }
             
             .perks-traits-grid {
