@@ -1085,7 +1085,7 @@
                 </div>
             </div>
             
-            <div class="section stats-section"
+            <div class="section stats-section">
                 <div class="section-title">Stats</div>
                 <div class="stats-stats">
                     <div class="stat-box">
