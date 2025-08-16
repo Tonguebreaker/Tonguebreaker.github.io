@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1086,7 +1085,7 @@
                 </div>
             </div>
             
-            <div class="section stats-section" style="grid-column: span 2;">
+            <div class="section stats-section"
                 <div class="section-title">Stats</div>
                 <div class="stats-stats">
                     <div class="stat-box">
